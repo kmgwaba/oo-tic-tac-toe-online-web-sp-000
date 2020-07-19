@@ -28,8 +28,8 @@ def input_to_index(player_input)
   return index
 end
 
-def move(index, current_player)
-  @board[index] = current_player
+def move(index, cplayer = 'X')
+  @board[index] = player
 end
 
 def position_taken?(index)
