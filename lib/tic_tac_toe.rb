@@ -126,7 +126,6 @@ def play
   end
 
  if won?
-   @winner = winner
    puts "Congratulations #{winner}!"
  elsif draw?
    puts "Cat's Game!"
