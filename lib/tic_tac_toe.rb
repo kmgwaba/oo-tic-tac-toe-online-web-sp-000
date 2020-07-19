@@ -127,7 +127,7 @@ def play
 
  if won?
    @winner = winner
-   puts 'Congratulations ' + @winner + "!"
+   puts "Congratulations #{winner}!"
  elsif draw?
    puts "Cat's Game!"
  end
