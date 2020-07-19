@@ -28,11 +28,11 @@ def input_to_index(user_input)
 end
 
 def move(board, index, current_player)
-  board[index] = current_player
+  @board[index] = current_player
 end
 
-def position_taken?(board, location)
-  board[location] != " " && board[location] != ""
+def position_taken?(index)
+  @board[index] == " X" || @board[index] == "O"
 end
 
 def valid_move?(board, index)
