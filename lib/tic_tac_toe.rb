@@ -118,8 +118,8 @@ end
 def play
   until over? == true
     turn
-  end 
- 
+  end
+
  if won?
    @winner = winner
    puts 'Congratulations ' + @winner + "!"
