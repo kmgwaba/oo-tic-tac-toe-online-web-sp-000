@@ -12,7 +12,6 @@ class TicTacToe
   def initialize
     @board = [" "," "," "," "," "," "," "," "," "]
   end
-end
 
 def display_board
   puts " #{@board[0]} | #{@board[1]} | #{@board[2]} "
@@ -23,7 +22,9 @@ def display_board
 end
 
 def input_to_index(player_input)
-  player_input.to_i - 1
+  (player_input)
+  player_input = player_input.to_i
+  index = player_input-1
   return index
 end
 
