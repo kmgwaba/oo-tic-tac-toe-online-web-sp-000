@@ -10,9 +10,8 @@ class TicTacToe
     [2,5,8]
   ]
   def initialize(board = nil)
-    @board = board || Array.new(9, " ")
+    @board =  Array.new(9, " ")
   end
-end
 
 def display_board
   puts " #{@board[0]} | #{@board[1]} | #{@board[2]} "
@@ -22,19 +21,16 @@ def display_board
   puts " #{@board[6]} | #{@board[7]} | #{@board[8]} "
 end
 
-def input_to_index(player_input)
-  (player_input)
-  player_input = player_input.to_i
-  index = player_input-1
-  return index
+def input_to_index(user_input)
+  user_input.to_i - 1
 end
 
-def move(index, cplayer = 'X')
-  @board[index] = player
+def move(index, current_player = 'X')
+  @board[index] = current_player
 end
 
 def position_taken?(index)
-  @board[index]== "X" || @board[index] == "O"
+  !(@board[index].nil || @board[index] == " "
 end
 
 def valid_move?(index)
@@ -54,42 +50,51 @@ def turn
 end
 
 def turn_count
-  counter = 0
-  @board.each do |space|
-    if space == "X" || space == "O"
-    counter += 1
+  turn = 0
+  @board.each do |index|
+    if index == "X" || index == "O"
+    turn += 1
   end
 end
-return counter
+return turn
 end
 
 def current_player
-  turn_count% 2 == 0 ? "X" : "O"
+  num_turns = turn_count
+  if num_turns % 2 == 0
+    player = "X"
+  else
+    player = "O"
+  end
+  return player
 end
 
-def check_win_combo?(player, win_combo)
-  win_combo.all? do |position|
-    @board[position] == player
-  end
-end
 
 def won?
-  WIN_COMBINATIONS.each do |win_combo|
-    if check_win_combo?('X', win_combo)
+  WIN_COMBINATIONS.each {|win_combo|
+    index_0 = win_combo[0]
+    index_1 = win_combo[1]
+    index_2 = win_combo[2]
+
+    position_1 = @board[index_0]
+    position_2 = @board[index_1]
+    position_3 = @board[index_2]
+
+    if position_1 == "X" && position_2 == "X" && position_3 == "X"
       return win_combo
-      elsif check_win_combo?('O', win_combo)
+    elsif position_1 == "O" && position_2 == "O" && position_3 == "O"
       return win_combo
-  end
-end
-return false
+    end
+  }
+  return false
 end
 
-def full?(board)
-  @board.all?{|token| token == "X" || token == "O"}
+def full?
+  @board.all? {|token| token == "X" || token == "O"}
 end
 
 def draw?
-  !won? && full?
+  if !won? && full?
 end
 
 def over?
