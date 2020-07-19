@@ -100,24 +100,26 @@ def over?(board)
   end
 end
 
-def winner(board)
-  if win_combo = won?
-    return @board[win_combo.first]
+def winner
+  index = []
+  index = won?
+  if index == false
+    return nil
+  else
+    if @board[index[0]] == "X"
+      return "X"
+    else
+      return "O"
+    end
   end
 end
 
-def play
-   counter = 0
-   until counter == 9
-     turn(board)
-     counter += 1
-   end
-end
 
 def play
-  while !over?
-   turn
- end
+  until over? == true
+    turn
+  end 
+ 
  if won?
    @winner = winner
    puts 'Congratulations ' + @winner + "!"
