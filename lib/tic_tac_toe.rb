@@ -27,7 +27,7 @@ def input_to_index(player_input)
   return index
 end
 
-def move(board, index, current_player)
+def move(index, current_player)
   @board[index] = current_player
 end
 
@@ -35,25 +35,25 @@ def position_taken?(index)
   @board[index]== "X" || @board[index] == "O"
 end
 
-def valid_move?(board, index)
-  index.between?(0,8) && !position_taken?(board, index)
+def valid_move?(index)
+  index.between?(0,8) && !position_taken?(index)
 end
 
-def turn(board)
+def turn
   puts "Please enter 1-9:"
   input = gets.strip
   index = input_to_index(input)
   if valid_move?(board, index)
-    move(board, index, current_player(board))
-    display_board(board)
+    move(board, index, current_player
+    display_board
   else
-    turn(board)
+    turn
   end
 end
 
-def turn_count(board)
+def turn_count
   counter = 0
-  board.each do |space|
+  @board.each do |space|
     if space == "X" || space == "O"
     counter += 1
   end
@@ -61,55 +61,37 @@ end
 return counter
 end
 
-def current_player(board)
+def current_player
+  turn_count% 2 == 0 ? "X" : "O"
+end
 
-    num = turn_count(board)
-    if num % 2 == 0
-      return "X"
-    else
-      return "O"
+def check_win_combo?(player, win_combo)
+  win_combo.all? do |position|
+    @board[position] == player
   end
 end
 
-def won?(board)
+def won?
   WIN_COMBINATIONS.each do |win_combo|
-
-    index_1 = win_combo[0]
-    index_2 = win_combo[1]
-    index_3 = win_combo[2]
-
-    position_1 = board[index_1]
-    position_2 = board[index_2]
-    position_3 = board[index_3]
-
-    if position_1 == "X" && position_2 == "X" && position_3 == "X"
+    if check_win_combo?('X', win_combo)
       return win_combo
-
-    elsif position_1 == "O" && position_2 == "O" && position_3 == "O"
+      elsif check_win_combo?('O', win_combo)
       return win_combo
-
-end
   end
-  return false
+end
+return false
 end
 
 def full?(board)
-  board.all? do |position|
-  position == "X" || position == "O"
-
+  @board.all?{|token| token == "X" || token == "O"}
 end
-  end
 
-  def draw?(board)
-  if !won?(board) && full?(board)
-    return true
-  else
-    return false
-  end
+def draw?
+  !won? && full?
 end
 
 def over?(board)
-  if won?(board) || draw?(board) || full?(board)
+  if won? || draw?|| full?
     return true
   else
     return false
