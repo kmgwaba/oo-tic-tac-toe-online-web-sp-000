@@ -96,7 +96,7 @@ end
 def draw?
   if !won? && full?
     return true
-  else 
+  else
     return false 
 end
 
@@ -135,4 +135,4 @@ def play
  end
 end
 end
-end 
+end
