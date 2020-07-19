@@ -1,17 +1,19 @@
 class TicTacToe
+
   WIN_COMBINATIONS = [
-    [0,1,2],
-    [3,4,5],
-    [6,7,8],
-    [0,4,8],
-    [6,4,2],
-    [1,4,7],
-    [0,3,6],
-    [2,5,8]
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [6, 4, 2]
   ]
-  def initialize(board = nil)
-    @board =  Array.new(9, " ")
-  end
+
+def initialize
+  @board = Array.new(9, " ")
+end
 
 def display_board
   puts " #{@board[0]} | #{@board[1]} | #{@board[2]} "
@@ -25,41 +27,30 @@ def input_to_index(user_input)
   user_input.to_i - 1
 end
 
-def move(index, current_player = 'X')
+def move(index, current_player = "X")
   @board[index] = current_player
 end
 
 def position_taken?(index)
-  !(@board[index].nil || @board[index] == " ")
+  !(@board[index].nil? || @board[index] == " ")
 end
 
 def valid_move?(index)
   index.between?(0,8) && !position_taken?(index)
 end
 
-def turn
-  puts "Please enter 1-9:"
-  input = gets.strip
-  index = input_to_index(user_input)
-  if valid_move?(index)
-    move(index, current_player)
-    display_board
-  else
-    turn
-  end
-end
-
 def turn_count
   turn = 0
   @board.each do |index|
     if index == "X" || index == "O"
-    turn += 1
+      turn += 1
+    end
   end
-end
-return turn
+  return turn
 end
 
 def current_player
+  #if the turn count is an even number, that means O just went, so the next/current player is X
   num_turns = turn_count
   if num_turns % 2 == 0
     player = "X"
@@ -69,6 +60,18 @@ def current_player
   return player
 end
 
+def turn
+  puts "Please choose a number 1-9:"
+  user_input = gets.chomp
+  index = input_to_index(user_input)
+  if valid_move?(index)
+    player_token = current_player
+    move(index, player_token)
+    display_board
+  else
+    turn
+  end
+end
 
 def won?
   WIN_COMBINATIONS.each {|win_combo|
@@ -90,14 +93,15 @@ def won?
 end
 
 def full?
-  @board.all? {|token| token == "X" || token == "O"}
+  @board.all? {|index| index == "X" || index == "O"}
 end
 
 def draw?
   if !won? && full?
     return true
   else
-    return false 
+    return false
+  end
 end
 
 def over?
@@ -122,17 +126,16 @@ def winner
   end
 end
 
-
 def play
   until over? == true
     turn
   end
 
- if won?
-   puts "Congratulations #{winner}!"
- elsif draw?
-   puts "Cat's Game!"
- end
+  if won?
+    puts "Congratulations #{winner}!"
+  elsif draw?
+    puts "Cat's Game!"
+  end
 end
-end
+
 end
